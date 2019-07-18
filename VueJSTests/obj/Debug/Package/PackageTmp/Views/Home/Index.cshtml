@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<style>
+
+    div.table {
+        border: 1px solid black;
+        display: table;
+    }
+
+    div.tr {
+        border: 1px solid black;
+        display: table-row;
+    }
+
+    div.td {
+        border: 1px solid black;
+        display: table-cell;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        var currentDate = new Date();
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    tasks:
+
+                        [{
+                            id: "11111",
+                            name: "Do it now",
+                            iconUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/WPVG_icon_2016.svg/249px-WPVG_icon_2016.svg.png",
+                            owner: "matt@techgration.com",
+                            done: false,
+                            detailsDisplay: "none",
+                            details: "This is a bunch of words to describe task 11111",
+                            date: currentDate,
+                            editMode: false
+                        },
+                        {
+                            id: "22222",
+                            name: "Do it later",
+                            iconUrl: "https://icon.cat/img/icon_loop.png",
+                            owner: "matt@techgration.com",
+                            done: false,
+                            detailsDisplay: "none",
+                            details: "This is a bunch of words to describe task 22222",
+                            date: currentDate,
+                            editMode: true
+                        },
+                        {
+                            id: "33333",
+                            name: "Do it tomorrow",
+                            iconUrl: "https://image.flaticon.com/icons/svg/281/281764.svg",
+                            owner: "matt@techgration.com",
+                            done: false,
+                            detailsDisplay: "none",
+                            details: "This is a bunch of words to describe task 33333",
+                            date: currentDate,
+                            editMode: false
+                        }
+
+
+                        ]
+
+                }
+
+            },
+
+            methods: {
+                enter: (event) => { event.target.parentNode.parentNode.style.backgroundColor = "yellow" },
+                exit: (event) => { event.target.parentNode.parentNode.style.backgroundColor = "" },
+                submit: function (event) {
+                    this.name = target.value;
+                    this.editMode = false;
+                }
+
+               
+
+            }
+        });
+
+    }
+</script>
+
+
+<table id="app" style="border: 2px solid black">
+    <tbody style="border: 2px solid black" v-for="task in tasks" v-on:click="task.editMode = true" v-on:mouseover="enter" v-on:mouseout="exit">
+        <tr>
+            <td>
+                Task ID: {{ task.id }}
+            </td>
+        </tr>
+        <tr>
+            <td v-if="task.editMode">
+                Task Name: <input type="text" :value="task.name" v-on:keyup.enter="submit" />
+            </td>
+            <td v-else>
+                Task Name:  {{ task.name }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Task Icon:
+                <img :src="task.iconUrl" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                Task Owner (Email):  {{ task.owner }}
+            </td>
+
+        </tr>
+        <tr id="detailsDisplay">
+            <td :style="{ display: task.detailsDisplay }">
+                Task Details: {{task.details}}
+            </td>
+        </tr>
+        <tr id="taskDate">
+            <td>
+                Task Date: {{task.date}}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+        </tr>
+
+    </tbody>
+
+</table>
+
